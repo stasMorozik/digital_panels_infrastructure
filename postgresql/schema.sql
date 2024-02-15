@@ -1,14 +1,6 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
-
-DROP INDEX confirmation_codes_needle;
-DROP TABLE confirmation_codes;
-
-DROP INDEX users_id;
-DROP INDEX users_email;
-DROP TABLE users;
-
 DROP TABLE relations_user_task;
 DROP TABLE tasks;
 
@@ -26,6 +18,13 @@ DROP TABLE devices;
 
 DROP TABLE relations_user_group;
 DROP TABLE groups;
+
+DROP INDEX confirmation_codes_needle;
+DROP TABLE confirmation_codes;
+
+DROP INDEX users_id;
+DROP INDEX users_email;
+DROP TABLE users;
 
 CREATE TABLE users (
   id UUID NOT NULL,
@@ -206,7 +205,7 @@ CREATE TABLE relations_user_task (
   CONSTRAINT relations_user_task_tasks_id FOREIGN KEY(tasks_id) REFERENCES tasks(id)
 );
 
-CREATE UNIQUE INDEX relations_user_tasks_task_id_i ON relations_user_task (task_id);
+CREATE UNIQUE INDEX relations_user_task_task_id_i ON relations_user_task (task_id);
 
 -- INSERT INTO users (
 --   id, 
