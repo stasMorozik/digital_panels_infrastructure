@@ -194,6 +194,7 @@ CREATE TABLE tasks (
 
 CREATE UNIQUE INDEX tasks_id ON tasks (id);
 CREATE INDEX tasks_name ON tasks (name);
+CREATE INDEX tasks_hash ON tasks (hash);
 CREATE INDEX tasks_group_id ON tasks (group_id);
 
 CREATE TABLE relations_user_task (
