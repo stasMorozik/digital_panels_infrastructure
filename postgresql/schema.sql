@@ -166,7 +166,43 @@ CREATE TABLE relations_user_playlist (
   CONSTRAINT relations_user_playlist_playlist_id FOREIGN KEY(playlist_id) REFERENCES playlists(id)
 );
 
-CREATE UNIQUE INDEX relations_user_playlist_playlist_id ON relations_user_playlist (playlist_id);
+CREATE UNIQUE INDEX relations_user_playlist_playlist_id_i ON relations_user_playlist (playlist_id);
+
+CREATE TABLE tasks (
+  id UUID NOT NULL,
+  hash varchar(256),
+  name varchar(64) NOT NULL,
+  playlist_id UUID NOT NULL,
+  group_id UUID NOT NULL,
+  type varchar(16) NOT NULL,
+  day smallserial,
+  start_hour smallserial NOT NULL,
+  end_hour smallserial NOT NULL,
+  start_minute smallserial NOT NULL,
+  end_minute smallserial NOT NULL,
+  start smallserial NOT NULL,
+  end smallserial NOT NULL,
+  sum smallserial NOT NULL,
+  created date NOT NULL,
+  updated date NOT NULL,
+  CONSTRAINT tasks_playlist_id FOREIGN KEY(playlist_id) REFERENCES playlists(id),
+  CONSTRAINT tasks_group_id FOREIGN KEY(group_id) REFERENCES groups(id)
+);
+
+CREATE UNIQUE INDEX tasks_id ON tasks (id);
+CREATE INDEX tasks_name ON tasks (name);
+CREATE INDEX tasks_group_id ON tasks (group_id);
+
+CREATE TABLE relations_user_task (
+  user_id UUID NOT NULL,
+  task_id UUID NOT NULL,
+  created date NOT NULL DEFAULT CURRENT_DATE,
+  updated date NOT NULL DEFAULT CURRENT_DATE,
+  CONSTRAINT relations_user_task_user_id FOREIGN KEY(user_id) REFERENCES users(id),
+  CONSTRAINT relations_user_task_tasks_id FOREIGN KEY(tasks_id) REFERENCES tasks(id)
+);
+
+CREATE UNIQUE INDEX relations_user_tasks_task_id_i ON relations_user_task (task_id);
 
 -- CREATE UNIQUE INDEX devices_id ON devices (id);
 -- CREATE INDEX devices_ssh_host ON devices (ssh_host);
