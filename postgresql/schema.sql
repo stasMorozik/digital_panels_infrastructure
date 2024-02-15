@@ -9,6 +9,9 @@ DROP INDEX users_id;
 DROP INDEX users_email;
 DROP TABLE users;
 
+DROP TABLE relations_user_task;
+DROP TABLE tasks;
+
 DROP TABLE relations_user_content;
 DROP TABLE contents;
 
@@ -203,34 +206,6 @@ CREATE TABLE relations_user_task (
 );
 
 CREATE UNIQUE INDEX relations_user_tasks_task_id_i ON relations_user_task (task_id);
-
--- CREATE UNIQUE INDEX devices_id ON devices (id);
--- CREATE INDEX devices_ssh_host ON devices (ssh_host);
--- CREATE INDEX devices_address ON devices (address);
--- CREATE INDEX devices_longitude ON devices (longitude);
--- CREATE INDEX devices_latitude ON devices (latitude);
-
--- CREATE TABLE relations_user_device (
---   user_id UUID NOT NULL,
---   device_id UUID NOT NULL,
---   created date NOT NULL DEFAULT CURRENT_DATE,
---   updated date NOT NULL DEFAULT CURRENT_DATE,
---   CONSTRAINT relations_user_device_user_id FOREIGN KEY(user_id) REFERENCES users(id),
---   CONSTRAINT relations_user_device_device_id FOREIGN KEY(device_id) REFERENCES devices(id)
--- );
-
--- CREATE UNIQUE INDEX relations_user_device_device_id ON relations_user_device (device_id);
-
--- CREATE TABLE relations_playlist_device (
---   playlist_id UUID NOT NULL,
---   device_id UUID NOT NULL,
---   created date NOT NULL DEFAULT CURRENT_DATE,
---   updated date NOT NULL DEFAULT CURRENT_DATE,
---   CONSTRAINT relations_playlist_device_playlist_id FOREIGN KEY(playlist_id) REFERENCES playlists(id),
---   CONSTRAINT relations_playlist_device_device_id FOREIGN KEY(device_id) REFERENCES devices(id)
--- );
-
--- CREATE UNIQUE INDEX relations_playlist_device_device_id ON relations_playlist_device (device_id);
 
 -- INSERT INTO users (
 --   id, 
