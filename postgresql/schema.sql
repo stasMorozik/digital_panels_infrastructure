@@ -13,6 +13,9 @@ DROP TABLE files;
 DROP TABLE relations_user_playlist;
 DROP TABLE playlists;
 
+DROP TABLE relations_user_assembly;
+DROP TABLE assemblies;
+
 DROP TABLE relations_user_device;
 DROP TABLE devices;
 
@@ -72,6 +75,27 @@ CREATE TABLE relations_user_file (
 
 CREATE INDEX relations_user_file_file_id_i ON relations_user_file (file_id);
 
+CREATE TABLE playlists (
+  id UUID NOT NULL,
+  name varchar(64) NOT NULL,
+  sum smallserial NOT NULL,
+  created date NOT NULL,
+  updated date NOT NULL
+);
+
+CREATE UNIQUE INDEX playlists_id ON playlists (id);
+CREATE INDEX playlists_name ON playlists (name);
+
+CREATE TABLE relations_user_playlist (
+  user_id UUID NOT NULL,
+  playlist_id UUID NOT NULL,
+  created date NOT NULL DEFAULT CURRENT_DATE,
+  updated date NOT NULL DEFAULT CURRENT_DATE,
+  CONSTRAINT relations_user_playlist_user_id FOREIGN KEY(user_id) REFERENCES users(id),
+  CONSTRAINT relations_user_playlist_playlist_id FOREIGN KEY(playlist_id) REFERENCES playlists(id)
+);
+
+
 CREATE TABLE contents (
   id UUID NOT NULL,
   name varchar(64) NOT NULL,
@@ -99,33 +123,6 @@ CREATE TABLE relations_user_content (
 
 CREATE INDEX relations_user_content_content_id_i ON relations_user_content (content_id);
 
-CREATE TABLE devices (
-  id UUID NOT NULL,
-  ip varchar(64) NOT NULL,
-  latitude numeric NOT NULL,
-  longitude numeric NOT NULL,
-  desc varchar(256) NOT NULL,
-  group_id UUID NOT NULL,
-  created date NOT NULL,
-  updated date NOT NULL,
-  CONSTRAINT devices_group_id FOREIGN KEY(group_id) REFERENCES groups(id)
-);
-
-CREATE UNIQUE INDEX devices_id ON devices (id);
-CREATE INDEX devices_ip ON devices (ip);
-CREATE INDEX devices_desc ON devices (desc);
-
-CREATE TABLE relations_user_device (
-  user_id UUID NOT NULL,
-  device_id UUID NOT NULL,
-  created date NOT NULL DEFAULT CURRENT_DATE,
-  updated date NOT NULL DEFAULT CURRENT_DATE,
-  CONSTRAINT relations_user_device_user_id FOREIGN KEY(user_id) REFERENCES users(id),
-  CONSTRAINT relations_user_device_device_id FOREIGN KEY(device_id) REFERENCES devices(id)
-);
-
-CREATE INDEX relations_user_device_device_id_i ON relations_user_device (device_id);
-
 CREATE TABLE groups (
   id UUID NOT NULL,
   name varchar(64) NOT NULL,
@@ -148,27 +145,32 @@ CREATE TABLE relations_user_group (
 
 CREATE UNIQUE INDEX relations_user_group_group_id_i ON relations_user_group (group_id);
 
-CREATE TABLE playlists (
+CREATE TABLE devices (
   id UUID NOT NULL,
-  name varchar(64) NOT NULL,
-  sum smallserial NOT NULL,
+  ip varchar(64) NOT NULL,
+  latitude numeric NOT NULL,
+  longitude numeric NOT NULL,
+  description varchar(256) NOT NULL,
+  group_id UUID NOT NULL,
   created date NOT NULL,
-  updated date NOT NULL
+  updated date NOT NULL,
+  CONSTRAINT devices_group_id FOREIGN KEY(group_id) REFERENCES groups(id)
 );
 
-CREATE UNIQUE INDEX playlists_id ON playlists (id);
-CREATE INDEX playlists_name ON playlists (name);
+CREATE UNIQUE INDEX devices_id ON devices (id);
+CREATE INDEX devices_ip ON devices (ip);
+CREATE INDEX devices_description ON devices (description);
 
-CREATE TABLE relations_user_playlist (
+CREATE TABLE relations_user_device (
   user_id UUID NOT NULL,
-  playlist_id UUID NOT NULL,
+  device_id UUID NOT NULL,
   created date NOT NULL DEFAULT CURRENT_DATE,
   updated date NOT NULL DEFAULT CURRENT_DATE,
-  CONSTRAINT relations_user_playlist_user_id FOREIGN KEY(user_id) REFERENCES users(id),
-  CONSTRAINT relations_user_playlist_playlist_id FOREIGN KEY(playlist_id) REFERENCES playlists(id)
+  CONSTRAINT relations_user_device_user_id FOREIGN KEY(user_id) REFERENCES users(id),
+  CONSTRAINT relations_user_device_device_id FOREIGN KEY(device_id) REFERENCES devices(id)
 );
 
-CREATE UNIQUE INDEX relations_user_playlist_playlist_id_i ON relations_user_playlist (playlist_id);
+CREATE INDEX relations_user_device_device_id_i ON relations_user_device (device_id);
 
 CREATE TABLE tasks (
   id UUID NOT NULL,
@@ -182,8 +184,8 @@ CREATE TABLE tasks (
   end_hour smallserial NOT NULL,
   start_minute smallserial NOT NULL,
   end_minute smallserial NOT NULL,
-  start smallserial NOT NULL,
-  end smallserial NOT NULL,
+  start_hm smallserial NOT NULL,
+  end_hm smallserial NOT NULL,
   sum smallserial NOT NULL,
   created date NOT NULL,
   updated date NOT NULL,
@@ -202,7 +204,7 @@ CREATE TABLE relations_user_task (
   created date NOT NULL DEFAULT CURRENT_DATE,
   updated date NOT NULL DEFAULT CURRENT_DATE,
   CONSTRAINT relations_user_task_user_id FOREIGN KEY(user_id) REFERENCES users(id),
-  CONSTRAINT relations_user_task_tasks_id FOREIGN KEY(tasks_id) REFERENCES tasks(id)
+  CONSTRAINT relations_user_task_task_id FOREIGN KEY(task_id) REFERENCES tasks(id)
 );
 
 CREATE UNIQUE INDEX relations_user_task_task_id_i ON relations_user_task (task_id);
@@ -221,6 +223,17 @@ CREATE TABLE assemblies (
 
 CREATE UNIQUE INDEX assemblies_id ON assemblies (id);
 CREATE INDEX assemblies_name ON assemblies (url);
+
+CREATE TABLE relations_user_assembly (
+  user_id UUID NOT NULL,
+  assembly_id UUID NOT NULL,
+  created date NOT NULL DEFAULT CURRENT_DATE,
+  updated date NOT NULL DEFAULT CURRENT_DATE,
+  CONSTRAINT relations_user_assembly_user_id FOREIGN KEY(user_id) REFERENCES users(id),
+  CONSTRAINT relations_user_assembly_assembly_id FOREIGN KEY(assembly_id) REFERENCES assemblies(id)
+);
+
+CREATE UNIQUE INDEX relations_user_assembly_assembly_id_i ON relations_user_assembly (assembly_id);
 
 INSERT INTO users (
   id, 
