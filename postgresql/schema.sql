@@ -244,7 +244,7 @@ INSERT INTO users (
   updated
 ) VALUES (
   uuid_generate_v4(), 
-  pgp_sym_encrypt('stasmoriniv@gmail.com','!qazSymKeyXsw2'),
+  pgp_sym_encrypt('stanim857@gmail.com','!qazSymKeyXsw2'),
   pgp_sym_encrypt('Stas','!qazSymKeyXsw2'), 
   pgp_sym_encrypt('Mironov','!qazSymKeyXsw2'), 
   now(), 
