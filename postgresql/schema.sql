@@ -31,9 +31,9 @@ DROP TABLE users;
 
 CREATE TABLE users (
   id UUID NOT NULL,
-  email text,
-  name text,
-  surname text,
+  email bytea,
+  name bytea,
+  surname bytea,
   created date NOT NULL,
   updated date NOT NULL
 );
@@ -42,7 +42,7 @@ CREATE UNIQUE INDEX users_id ON users (id);
 CREATE UNIQUE INDEX users_email ON users (email);
 
 CREATE TABLE confirmation_codes (
-  needle text,
+  needle bytea,
   code smallint NOT NULL,
   confirmed boolean NOT NULL,
   created serial NOT NULL
