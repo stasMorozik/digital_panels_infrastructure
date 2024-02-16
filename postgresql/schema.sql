@@ -207,18 +207,33 @@ CREATE TABLE relations_user_task (
 
 CREATE UNIQUE INDEX relations_user_task_task_id_i ON relations_user_task (task_id);
 
--- INSERT INTO users (
---   id, 
---   email, 
---   name, 
---   surname, 
---   created, 
---   updated
--- ) VALUES (
---   uuid_generate_v4(), 
---   'stasmoriniv@gmail.com', 
---   'admin', 
---   'root', 
---   now(), 
---   now()
--- );
+
+CREATE TABLE assemblies (
+  id UUID NOT NULL,
+  group_id UUID NOT NULL,
+  url text NOT NULL,
+  type varchar(64) NOT NULL,
+  status boolean NOT NULL,
+  created date NOT NULL,
+  updated date NOT NULL,
+  CONSTRAINT assemblies_group_id FOREIGN KEY(group_id) REFERENCES groups(id)
+);
+
+CREATE UNIQUE INDEX assemblies_id ON assemblies (id);
+CREATE INDEX assemblies_name ON assemblies (url);
+
+INSERT INTO users (
+  id, 
+  email, 
+  name, 
+  surname, 
+  created, 
+  updated
+) VALUES (
+  uuid_generate_v4(), 
+  pgp_sym_encrypt('stasmoriniv@gmail.com','!qazSymKeyXsw2'),
+  pgp_sym_encrypt('Stas','!qazSymKeyXsw2'), 
+  pgp_sym_encrypt('Mironov','!qazSymKeyXsw2'), 
+  now(), 
+  now()
+);
