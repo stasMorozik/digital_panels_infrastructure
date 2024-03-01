@@ -57,8 +57,7 @@ CREATE TABLE files (
   extension varchar(8) NOT NULL,
   type varchar(16) NOT NULL,
   size smallserial NOT NULL,
-  created date NOT NULL,
-  updated date NOT NULL
+  created date NOT NULL
 );
 
 CREATE UNIQUE INDEX files_id ON files (id);
@@ -246,7 +245,7 @@ INSERT INTO users (
   uuid_generate_v4(), 
   pgp_sym_encrypt('stanim857@gmail.com','!qazSymKeyXsw2'),
   pgp_sym_encrypt('Stas','!qazSymKeyXsw2'), 
-  pgp_sym_encrypt('Mironov','!qazSymKeyXsw2'), 
+  pgp_sym_encrypt('Morozov','!qazSymKeyXsw2'), 
   now(), 
   now()
 );
