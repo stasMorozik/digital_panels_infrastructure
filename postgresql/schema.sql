@@ -56,7 +56,7 @@ CREATE TABLE files (
   url text NOT NULL,
   extension varchar(8) NOT NULL,
   type varchar(16) NOT NULL,
-  size smallserial NOT NULL,
+  size integer NOT NULL,
   created date NOT NULL
 );
 
@@ -77,7 +77,7 @@ CREATE INDEX relations_user_file_file_id_i ON relations_user_file (file_id);
 CREATE TABLE playlists (
   id UUID NOT NULL,
   name varchar(64) NOT NULL,
-  sum smallserial NOT NULL,
+  sum integer NOT NULL,
   created date NOT NULL,
   updated date NOT NULL
 );
@@ -100,8 +100,8 @@ CREATE TABLE contents (
   name varchar(64) NOT NULL,
   file_id UUID NOT NULL,
   playlist_id UUID NOT NULL,
-  duration smallserial NOT NULL,
-  serial_number  smallserial NOT NULL,
+  duration integer NOT NULL,
+  serial_number  integer NOT NULL,
   created date NOT NULL,
   updated date NOT NULL,
   CONSTRAINT contents_file_id FOREIGN KEY(file_id) REFERENCES files(id),
@@ -125,7 +125,7 @@ CREATE INDEX relations_user_content_content_id_i ON relations_user_content (cont
 CREATE TABLE groups (
   id UUID NOT NULL,
   name varchar(64) NOT NULL,
-  sum smallserial NOT NULL,
+  sum integer NOT NULL,
   created date NOT NULL,
   updated date NOT NULL
 );
@@ -177,14 +177,14 @@ CREATE TABLE tasks (
   playlist_id UUID NOT NULL,
   group_id UUID NOT NULL,
   type varchar(16) NOT NULL,
-  day smallserial,
-  start_hour smallserial NOT NULL,
-  end_hour smallserial NOT NULL,
-  start_minute smallserial NOT NULL,
-  end_minute smallserial NOT NULL,
-  start_hm smallserial NOT NULL,
-  end_hm smallserial NOT NULL,
-  sum smallserial NOT NULL,
+  day integer NULL,
+  start_hour integer NOT NULL,
+  end_hour integer NOT NULL,
+  start_minute integer NOT NULL,
+  end_minute integer NOT NULL,
+  start_hm integer NOT NULL,
+  end_hm integer NOT NULL,
+  sum integer NOT NULL,
   created date NOT NULL,
   updated date NOT NULL,
   CONSTRAINT tasks_playlist_id FOREIGN KEY(playlist_id) REFERENCES playlists(id),
