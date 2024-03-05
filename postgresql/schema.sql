@@ -173,7 +173,6 @@ CREATE INDEX relations_user_device_device_id_i ON relations_user_device (device_
 
 CREATE TABLE tasks (
   id UUID NOT NULL,
-  hash varchar(256),
   name varchar(64) NOT NULL,
   playlist_id UUID NOT NULL,
   group_id UUID NOT NULL,
@@ -194,7 +193,6 @@ CREATE TABLE tasks (
 
 CREATE UNIQUE INDEX tasks_id ON tasks (id);
 CREATE INDEX tasks_name ON tasks (name);
-CREATE INDEX tasks_hash ON tasks (hash);
 CREATE INDEX tasks_group_id ON tasks (group_id);
 
 CREATE TABLE relations_user_task (
