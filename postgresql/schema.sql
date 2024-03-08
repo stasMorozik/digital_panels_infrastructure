@@ -150,6 +150,7 @@ CREATE TABLE devices (
   latitude numeric NOT NULL,
   longitude numeric NOT NULL,
   description varchar(256) NOT NULL,
+  is_active boolean NOT NULL,
   group_id UUID NOT NULL,
   created date NOT NULL,
   updated date NOT NULL,
