@@ -56,7 +56,7 @@ CREATE TABLE files (
   url text NOT NULL,
   extension varchar(8) NOT NULL,
   type varchar(16) NOT NULL,
-  size smallint NOT NULL,
+  size integer NOT NULL,
   created date NOT NULL
 );
 
