@@ -177,7 +177,7 @@ CREATE TABLE tasks (
   name varchar(64) NOT NULL,
   playlist_id UUID NOT NULL,
   group_id UUID NOT NULL,
-  type varchar(16) NOT NULL,
+  type varchar(32) NOT NULL,
   day smallint NULL,
   start_hour smallint NOT NULL,
   end_hour smallint NOT NULL,
