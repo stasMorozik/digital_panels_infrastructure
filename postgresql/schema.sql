@@ -213,6 +213,8 @@ CREATE TABLE assemblies (
   group_id UUID NOT NULL,
   url text NOT NULL,
   type varchar(64) NOT NULL,
+  access_token text NOT NULL,
+  refresh_token text NOT NULL,
   status boolean NOT NULL,
   created date NOT NULL,
   updated date NOT NULL,
